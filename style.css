@@ -1,0 +1,489 @@
+* {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+          background-color: #782a33;
+          color: #ffffff;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+}
+
+.main-header {
+          text-align: center;
+          padding: 30px 20px;
+          width: 100%;
+          background: #627522;
+          border-bottom: 6px solid #000000;
+}
+
+.header-title {
+          font-size: 3rem;
+          font-weight: 700;
+          color: #000000;
+          margin-bottom: 8px;
+}
+
+.header-subtitle {
+          font-size: 1.8em;
+          font-weight: 600;
+          color: #000000;
+}
+
+.about-section {
+          width: 100%;
+          max-width: 1000px;
+          padding: 40px 20px;
+          text-align: center;
+}
+
+.about-text {
+          font-size: 1.7rem;
+          line-height: 2.;
+          color: #000000;
+          text-align: justify;
+          font-weight: 500;
+}
+.room-wrapper {
+          width: 100%;
+          max-width: 1400px;
+          padding: 20px;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 30px;
+}
+
+.room-container {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.room-bg {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+}
+
+.interactive-item {
+          position: absolute;
+          cursor: pointer;
+          will-change: filter;
+}
+
+.interactive-item:hover {
+          filter: brightness(1.12);
+}
+
+.item-img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+}
+
+/* Okno */
+.window-spot {
+          top: 2%;
+          left: 55%;
+          width: 40%;
+          height: 33%;
+}
+
+#window-img {
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
+}
+
+/* OBRAZ NA ZDI */
+.frame-spot {
+          top: 2%;
+          left: 10%;
+          width: 38%;
+          height: 40%;
+          position: absolute;
+}
+
+.art-content {
+          position: absolute;
+          top: 15%;
+          left: 12%;
+          width: 76%;
+          height: 70%;
+          object-fit: fill;
+          z-index: 1;
+}
+
+.art-content.cat-art {
+          top: 11%;
+          left: 3%;
+          width: 100%;
+          height: 83%;
+          object-fit: fill;
+}
+
+.frame-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
+          z-index: 2;
+          pointer-events: none;
+}
+
+.gallery-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(0, 0, 0, 0.7);
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 8px 12px;
+          font-size: 1.2rem;
+          cursor: pointer;
+          border-radius: 4px;
+          opacity: 0;
+          transition: opacity 0.15s ease;
+          z-index: 5;
+}
+
+.gallery-arrow:hover {
+          background: rgba(0, 0, 0, 0.9);
+}
+
+.frame-spot:hover .gallery-arrow {
+          opacity: 1;
+}
+
+.left-arrow {
+          left: -10px;
+}
+
+.right-arrow {
+          right: -10px;
+}
+
+/* Gramofon */
+.gramophone-spot {
+          top: 38%;
+          left: 16%;
+          width: 28%;
+          height: 35%;
+}
+
+/* Displej PC */
+.pc-spot {
+          top: 38.3%;
+          left: 67.5%;
+          width: 20%;
+          height: 23%;
+          z-index: 3;
+}
+
+.pc-screen {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+}
+
+.pc-display-img {
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
+}
+
+/* MODAL / VYSKAKOVACÍ OKNA */
+.modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.85);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+          opacity: 1;
+          pointer-events: auto;
+}
+
+.modal-content {
+          position: relative;
+          width: 90%;
+          max-width: 1200px;
+          aspect-ratio: 16 / 9;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+          background-color: #000;
+}
+
+.modal-homepage-img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+}
+
+.modal-close {
+          position: absolute;
+          top: 12px;
+          right: 15px;
+          background: rgba(0, 0, 0, 0.7);
+          color: #ffffff;
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          border-radius: 50%;
+          width: 36px;
+          height: 36px;
+          font-size: 1.4rem;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1001;
+          transition: background 0.2s ease;
+}
+
+.modal-close:hover {
+          background: rgba(255, 0, 0, 0.8);
+}
+
+/* KLIKACÍ IKONY NA PLOŠE */
+.desktop-icon {
+          position: absolute;
+          cursor: pointer;
+          background: transparent;
+          z-index: 10;
+          border-radius: 4px;
+}
+
+.desktop-icon:hover {
+          background: rgba(255, 255, 255, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* OKNO APLIKACE */
+.app-window {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 65%;
+          max-width: 750px;
+          background: #ece9d8;
+          border: 2px solid #0054e3;
+          border-top-left-radius: 6px;
+          border-top-right-radius: 6px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+          display: none;
+          z-index: 50;
+          overflow: hidden;
+}
+
+.app-window.active {
+          display: block;
+}
+
+.app-window-header {
+          background: linear-gradient(to right, #0054e3 0%, #3a81f7 100%);
+          color: white;
+          padding: 6px 12px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-weight: bold;
+          font-size: 0.9rem;
+}
+
+.app-close-btn {
+          background: #e81123;
+          color: white;
+          border: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 3px;
+          cursor: pointer;
+          font-weight: bold;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+}
+
+.app-close-btn:hover {
+          background: #f1707a;
+}
+
+.app-window-body {
+          background: #000;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+}
+
+.app-window-body img,
+.app-window-body video {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+}
+
+/* --- STYLY PRO GRAMOFON WMP --- */
+.gramophone-modal-content {
+          background: #000;
+}
+
+.gramophone-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+}
+
+.gramophone-bg-img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+}
+
+/* Vinylová deska na talíři gramofonu */
+.vinyl-record {
+          position: absolute;
+          top: 28.7%;
+          left: 26.5%;
+          width: 22.5%;
+          aspect-ratio: 1 / 1;
+          border-radius: 50%;
+          object-fit: contain;
+          pointer-events: none;
+          transform: rotate(0deg);
+}
+
+/* WMP Tlačítka a prvky s přesnou absolutní pozicí */
+.wmp-btn {
+          position: absolute;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          border-radius: 50%;
+          z-index: 10;
+}
+
+.wmp-btn:hover {
+          background: rgba(255, 255, 255, 0.2);
+}
+
+/* Velké Play tlačítko vlevo */
+#gram-play {
+          left: 21%;
+          bottom: 10%;
+          width: 4.5%;
+          height: 7.5%;
+}
+
+/* Předchozí skladba (|<<) */
+#gram-prev {
+          left: 29.2%;
+          bottom: 10%;
+          width: 2.8%;
+          height: 2.5%;
+}
+
+/* Další skladba (>>|) */
+#gram-next {
+          left: 32.5%;
+          bottom: 10%;
+          width: 2.8%;
+          height: 2.5%;
+}
+
+/* Posuvník skladby */
+#gram-seek {
+          position: absolute;
+          top: 83%;
+          left: 28%;
+          width: 35%;
+          height: 6px;
+          cursor: pointer;
+          accent-color: #3a81f7;
+          z-index: 10;
+}
+
+/* Posuvník hlasitosti */
+#gram-volume {
+          position: absolute;
+          top: 89%;
+          left: 41%;
+          width: 14%;
+          height: 6px;
+          cursor: pointer;
+          accent-color: #3a81f7;
+          z-index: 10;
+}
+
+/* Název skladby */
+#gram-current-song-title {
+          position: absolute;
+          top: 77%;
+          left: 2.5%;
+          width: 63%;
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #111111;
+          text-align: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          z-index: 10;
+}
+
+/* Křížek pro zavření okna gramofonu */
+#close-gramophone-modal {
+          position: absolute;
+          top: 6.4%;
+          right: 34.3%;
+          width: 3%;
+          height: 5%;
+          background: transparent;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+          z-index: 100;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 0;
+          transition: background-color 0.2s ease;
+}
+
+#close-gramophone-modal:hover {
+          background-color: rgba(255, 0, 0, 0.8);
+}

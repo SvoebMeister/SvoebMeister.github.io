@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Interaktivní Pokoj</title>
+          <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+          <!-- Horní záhlaví s barvou #627522 a silným černým dělícím pruhem -->
+          <header class="main-header">
+                    <h1 class="header-title">„Zdravím“</h1>
+                    <h2 class="header-subtitle">Daniel Svoboda</h2>
+          </header>
+
+          <!-- Text o tobě -->
+          <section class="about-section">
+                    <p class="about-text">
+                              Studuji IT na škole VOŠ a SPŠE Františka Křižíka. Ve volném čase cvičím, hraju tanky a
+                              ostatní kulturně signifikantní hry a sbírám vinylové desky.
+                    </p>
+          </section>
+
+          <!-- Hlavní sekce s pokojem -->
+          <main class="room-wrapper">
+                    <div class="room-container">
+                              <!-- Pozadí pokoje -->
+                              <img src="pokoj/webovka_pokoj.png" alt="Pokoj" class="room-bg">
+
+                              <!-- Okno -->
+                              <div class="interactive-item window-spot" id="window-spot">
+                                        <img src="okno/okno.png" alt="Okno" id="window-img" class="item-img">
+                              </div>
+
+                              <!-- Obraz na zdi s galerií -->
+                              <div class="interactive-item frame-spot">
+                                        <button class="gallery-arrow left-arrow" id="prev-art">❮</button>
+                                        <img src="obraz/obraz_maly_princ.png" alt="Art" id="art-img"
+                                                  class="art-content">
+                                        <img src="obraz/ram_obrazu.png" alt="Rám obrazu" class="frame-overlay">
+                                        <button class="gallery-arrow right-arrow" id="next-art">❯</button>
+                              </div>
+
+                              <!-- Gramofon -->
+                              <div class="interactive-item gramophone-spot" id="gramophone-spot">
+                                        <img src="gramec/gramec_kryt.png" alt="Gramofon" class="item-img">
+                              </div>
+
+                              <!-- Notebook s plochou -->
+                              <div class="interactive-item pc-spot" id="pc-spot">
+                                        <div class="pc-screen">
+                                                  <img src="pocitac/homepage/homepage.png" alt="Plocha PC"
+                                                            class="pc-display-img">
+                                        </div>
+                              </div>
+                    </div>
+          </main>
+
+          <!-- Vyskakovací okno pro PC homepage -->
+          <div class="modal-overlay" id="pc-modal">
+                    <div class="modal-content" id="pc-modal-content">
+                              <button class="modal-close" id="close-pc-modal">×</button>
+                              <img src="pocitac/homepage/homepage.png" alt="Plocha PC Fullscreen"
+                                        class="modal-homepage-img">
+
+                              <!-- Klikací ikony na ploše Windows XP -->
+                              <div class="desktop-icon" data-app="affinity"
+                                        style="top: 13.7%; left: 6.5%; width: 5.5%; height: 9.5%;" title="Affinity">
+                              </div>
+                              <div class="desktop-icon" data-app="blender"
+                                        style="top: 26%; left: 6.5%; width: 5.5%; height: 9.5%;" title="Blender"></div>
+                              <div class="desktop-icon" data-app="word"
+                                        style="top: 38%; left: 6.5%; width: 5.5%; height: 9.5%;" title="Word"></div>
+                              <div class="desktop-icon" data-app="excel"
+                                        style="top: 51%; left: 6.5%; width: 5.5%; height: 9.5%;" title="Excel"></div>
+                              <div class="desktop-icon" data-app="vs"
+                                        style="top: 63%; left: 6.5%; width: 5.5%; height: 9.5%;" title="VS Code"></div>
+
+                              <div class="desktop-icon" data-app="mafia"
+                                        style="top: 2.8%; left: 86.3%; width: 5.5%; height: 9.5%;" title="Mafia"></div>
+                              <div class="desktop-icon" data-app="wot"
+                                        style="top: 15.5%; left: 86.3%; width: 5.5%; height: 9.5%;"
+                                        title="World of Tanks"></div>
+                              <div class="desktop-icon" data-app="metro"
+                                        style="top: 26.7%; left: 86.3%; width: 5.5%; height: 9.5%;" title="Metro"></div>
+                              <div class="desktop-icon" data-app="eurotrack"
+                                        style="top: 40.3%; left: 86.3%; width: 5.5%; height: 9.5%;"
+                                        title="Euro Truck Simulator"></div>
+                              <div class="desktop-icon" data-app="detroit"
+                                        style="top: 52.5%; left: 86.3%; width: 5.5%; height: 9.5%;"
+                                        title="Detroit: Become Human"></div>
+
+                              <!-- Okno aplikace -->
+                              <div class="app-window" id="app-window">
+                                        <div class="app-window-header">
+                                                  <span id="app-title">Aplikace</span>
+                                                  <button class="app-close-btn" id="close-app-window">×</button>
+                                        </div>
+                                        <div class="app-window-body" id="app-window-body"></div>
+                              </div>
+                    </div>
+          </div>
+
+          <!-- Vyskakovací okno pro Gramofon (WMP) -->
+          <div class="modal-overlay" id="gramophone-modal">
+                    <div class="modal-content gramophone-modal-content">
+                              <button class="modal-close" id="close-gramophone-modal">×</button>
+                              <div class="gramophone-container">
+                                        <!-- Pozadí okna gramofonu WMP -->
+                                        <img src="gramec/vyskakovaci_okno_songy/vyskakovaci_okno_pisnicky.png"
+                                                  alt="Gramofon WMP" class="gramophone-bg-img">
+
+                                        <!-- Vinylová deska na talíři -->
+                                        <img src="gramec/vyskakovaci_okno_songy/deska.png" alt="Deska"
+                                                  class="vinyl-record" id="vinyl-record">
+
+                                        <!-- WMP Tlačítka a ovládací prvky -->
+                                        <button class="wmp-btn" id="gram-play" title="Přehrát / Pozastavit"></button>
+                                        <button class="wmp-btn" id="gram-prev" title="Předchozí skladba"></button>
+                                        <button class="wmp-btn" id="gram-next" title="Další skladba"></button>
+
+                                        <!-- Posuvník skladby -->
+                                        <input type="range" id="gram-seek" value="0" min="0" max="100" step="0.1">
+
+                                        <!-- Posuvník hlasitosti -->
+                                        <input type="range" id="gram-volume" value="1" min="0" max="1" step="0.01"
+                                                  title="Hlasitost">
+
+                                        <!-- Název skladby -->
+                                        <div id="gram-current-song-title">Vyberte skladbu</div>
+                              </div>
+                    </div>
+          </div>
+
+          <script src="script.js"></script>
+</body>
+
+</html>
