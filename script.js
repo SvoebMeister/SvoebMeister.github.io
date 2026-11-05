@@ -1,7 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   
+  // --- DYNAMICKÉ VLOŽENÍ POKOJE (OCHRANA PŘED BOTY) ---
+  const roomContainer = document.getElementById('room-container');
+  if (roomContainer) {
+    const roomBgImg = document.createElement('img');
+    roomBgImg.src = 'pokoj/webovka_pokoj.png';
+    roomBgImg.alt = 'Pokoj';
+    roomBgImg.className = 'room-bg';
+    roomContainer.insertBefore(roomBgImg, roomContainer.firstChild);
+  }
+
   // --- PERMANENTNÍ PŘEDNAČÍTÁNÍ OBRÁZKŮ (PRELOAD) ---
-  // Zabrání jakémukoli sekání, problikávání nebo zpoždění při kliknutí
   const imagesToPreload = [
     'pokoj/webovka_pokoj.png',
     'okno/okno.png',
@@ -51,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   nextBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    currentArtIndex = (currentArtIndex + 1) % artImages.length;
+    currentArtIndex = (currentArtIndex + 1 + artImages.length) % artImages.length;
     updateArt(currentArtIndex);
   });
 
