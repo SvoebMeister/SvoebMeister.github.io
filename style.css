@@ -6,8 +6,8 @@
 }
 
 body {
-          background-color: #782a33;
-          color: #ffffff;
+          background-color: #e6d18e;
+          color: #e6d18e;
           min-height: 100vh;
           display: flex;
           flex-direction: column;
@@ -18,21 +18,21 @@ body {
           text-align: center;
           padding: 30px 20px;
           width: 100%;
-          background: #627522;
+          background: #61712b;
           border-bottom: 6px solid #000000;
 }
 
 .header-title {
           font-size: 3rem;
           font-weight: 700;
-          color: #000000;
+          color: #e6d18e;
           margin-bottom: 8px;
 }
 
 .header-subtitle {
           font-size: 1.8em;
           font-weight: 600;
-          color: #000000;
+          color: #e6d18e;
 }
 
 .about-section {
@@ -45,9 +45,9 @@ body {
 .about-text {
           font-size: 1.7rem;
           line-height: 2;
-          color: #000000;
+          color: #61712b;
           text-align: justify;
-          font-weight: 500;
+          font-weight: 790.9;
 }
 
 .room-wrapper {
@@ -368,7 +368,7 @@ body {
           display: block;
 }
 
-/* Vinylová deska na talíři gramofonu */
+/* Vinylová deska na talíři gramofonu - s viditelným modrým ohraničením a podbarvením */
 .vinyl-record {
           position: absolute;
           top: 28.7%;
@@ -377,23 +377,26 @@ body {
           aspect-ratio: 1 / 1;
           border-radius: 50%;
           object-fit: contain;
-          pointer-events: none;
+          cursor: pointer;
           transform: rotate(0deg);
           will-change: transform;
+          background-color: rgba(0, 84, 227, 0.2) !important;
+          z-index: 5;
 }
 
-/* WMP Tlačítka a prvky s přesnou absolutní pozicí */
+/* WMP Tlačítka (Play, Prev, Next) s modrým čárkovaným ohraničením a modrým podbarvením */
 .wmp-btn {
           position: absolute;
-          background: transparent;
-          border: none;
           cursor: pointer;
-          border-radius: 50%;
           z-index: 10;
+          border: 2px dashed #0054e3 !important;
+          background-color: rgba(0, 84, 227, 0.25) !important;
+          transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .wmp-btn:hover {
-          background: rgba(255, 255, 255, 0.2);
+          background-color: rgba(0, 84, 227, 0.45) !important;
+          border-color: #3a81f7 !important;
 }
 
 /* Velké Play tlačítko vlevo */
@@ -402,6 +405,7 @@ body {
           bottom: 10%;
           width: 4.5%;
           height: 7.5%;
+          border-radius: 50%;
 }
 
 /* Předchozí skladba (|<<) */
@@ -410,6 +414,7 @@ body {
           bottom: 10%;
           width: 2.8%;
           height: 2.5%;
+          border-radius: 4px;
 }
 
 /* Další skladba (>>|) */
@@ -418,6 +423,7 @@ body {
           bottom: 10%;
           width: 2.8%;
           height: 2.5%;
+          border-radius: 4px;
 }
 
 /* Posuvník skladby */
@@ -483,7 +489,7 @@ body {
           background-color: rgba(255, 0, 0, 0.8);
 }
 
-/* --- MINIHRA MOORHUHN - ČISTÉ ROITAŽENÉ STROMY A LETADLO --- */
+/* --- MINIHRA MOORHUHN --- */
 .game-modal-content {
           width: 92%;
           max-width: 1200px;
@@ -531,7 +537,6 @@ body {
           user-select: none;
 }
 
-/* Větší retro zaměřovač */
 .custom-crosshair {
           position: absolute;
           width: 76px;
@@ -556,7 +561,6 @@ body {
           pointer-events: none;
 }
 
-/* Strom 1 (vlevo) - roztažený přesně od shora dolů bez opakování */
 .tree-obstacle-1 {
           position: absolute;
           top: 0;
@@ -565,12 +569,10 @@ body {
           background-image: url('okno/minihra/strom_1.png');
           background-repeat: no-repeat;
           background-size: 100% 100%;
-          /* Roztáhne se na plnou výšku okna */
           pointer-events: auto;
           z-index: 10;
 }
 
-/* Strom 2 (vpravo) - roztažený přesně od shora dolů bez opakování */
 .tree-obstacle-2 {
           position: absolute;
           top: 0;
@@ -579,7 +581,6 @@ body {
           background-image: url('okno/minihra/strom_2.png');
           background-repeat: no-repeat;
           background-size: 100% 100%;
-          /* Roztáhne se na plnou výšku okna */
           pointer-events: auto;
           z-index: 10;
 }
@@ -590,10 +591,8 @@ body {
           background-repeat: no-repeat !important;
           background-position: center !important;
           z-index: 4;
-          /* Pod stromy, aby se za nimi slepice schovávaly */
 }
 
-/* Velikosti slepic */
 .chicken-small {
           width: 50px;
           height: 50px;
@@ -609,7 +608,6 @@ body {
           height: 190px;
 }
 
-/* Letadlo a banner */
 .plane-container {
           position: absolute;
           display: flex;
@@ -625,7 +623,6 @@ body {
           background-repeat: no-repeat !important;
           background-position: center !important;
           transform: scaleX(-1);
-          /* Otočení letadla po směru letu zleva doprava */
           flex-shrink: 0;
 }
 
@@ -636,7 +633,6 @@ body {
           object-fit: contain;
 }
 
-/* Časovač a Skóre */
 .game-timer {
           position: absolute;
           top: 15px;
@@ -669,7 +665,6 @@ body {
           pointer-events: none;
 }
 
-/* Zásobník nábojů */
 .ammo-container {
           position: absolute;
           bottom: 20px;
@@ -710,7 +705,6 @@ body {
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
-/* Windows XP Okno */
 .xp-modal-overlay {
           position: fixed;
           top: 0;

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   
-  // --- DYNAMICKÉ VLOŽENÍ POKOJE (OCHRANA PŘED BOTY) ---
+  // --- DYNAMICKÉ VLOŽENÍ POKOJE ---
   const roomContainer = document.getElementById('room-container');
   if (roomContainer) {
     const roomBgImg = document.createElement('img');
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     roomContainer.insertBefore(roomBgImg, roomContainer.firstChild);
   }
 
-  // --- PERMANENTNÍ PŘEDNAČÍTÁNÍ OBRÁZKŮ (PRELOAD) - BEZ KOČKY ---
+  // --- PRELOAD OBRÁZKŮ ---
   const imagesToPreload = [
     'pokoj/webovka_pokoj.png',
     'okno/okno.png',
@@ -20,11 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'gramec/gramec_kryt.png',
     'gramec/vyskakovaci_okno_songy/vyskakovaci_okno_pisnicky.png',
     'gramec/vyskakovaci_okno_songy/deska.png',
-    'pocitac/homepage/homepage.png',
-    'pocitac/homepage/word/word_okno.png',
-    'pocitac/homepage/excel/excel_okno.png',
-    'pocitac/homepage/vs/vs_okno.png',
-    'pocitac/homepage/wot/wot_okno.png'
+    'pocitac/homepage/homepage.png'
   ];
 
   imagesToPreload.forEach(src => {
@@ -32,17 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
     img.src = src;
   });
 
-  // Seznam obrazů v galerii (kočka odstraněna, zbyly jen Malý princ a Kmotr)
+  // Galerie obrazů (kliknutím kamkoliv na obraz se přepíná)
   const artImages = [
     { src: 'obraz/obraz_maly_princ.png', customClass: '' },
     { src: 'obraz/obraz_kmotr.png', customClass: '' }
   ];
 
   let currentArtIndex = 0;
-
   const artImg = document.getElementById('art-img');
-  const prevBtn = document.getElementById('prev-art');
-  const nextBtn = document.getElementById('next-art');
+  const frameSpot = document.getElementById('frame-spot');
 
   function updateArt(index) {
     const current = artImages[index];
@@ -50,17 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
     artImg.src = current.src;
   }
 
-  prevBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    currentArtIndex = (currentArtIndex - 1 + artImages.length) % artImages.length;
-    updateArt(currentArtIndex);
-  });
-
-  nextBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    currentArtIndex = (currentArtIndex + 1 + artImages.length) % artImages.length;
-    updateArt(currentArtIndex);
-  });
+  if (frameSpot) {
+    frameSpot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentArtIndex = (currentArtIndex + 1) % artImages.length;
+      updateArt(currentArtIndex);
+    });
+  }
 
   updateArt(currentArtIndex);
 
@@ -326,7 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isPlaying) playTrack();
   });
 
-  // Automatické spuštění další písničky po dohrání té aktuální
   gramAudio.addEventListener('ended', () => {
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
     loadTrack(currentTrackIndex);
@@ -353,378 +342,373 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadTrack(0);
 
-// --- INTERAKTIVNÍ MINIHRA MOORHUHN ---
-const windowSpot = document.getElementById('window-spot');
-const gameModal = document.getElementById('game-modal');
-const closeGameModal = document.getElementById('close-game-modal');
-const gameArea = document.getElementById('game-area');
-const scoreDisplay = document.getElementById('score-val');
-const timerDisplay = document.getElementById('timer-val');
-const ammoContainer = document.getElementById('ammo-container');
-const reloadMsg = document.getElementById('reload-msg');
+  // --- INTERAKTIVNÍ MINIHRA MOORHUHN ---
+  const windowSpot = document.getElementById('window-spot');
+  const gameModal = document.getElementById('game-modal');
+  const closeGameModal = document.getElementById('close-game-modal');
+  const gameArea = document.getElementById('game-area');
+  const scoreDisplay = document.getElementById('score-val');
+  const timerDisplay = document.getElementById('timer-val');
+  const ammoContainer = document.getElementById('ammo-container');
+  const reloadMsg = document.getElementById('reload-msg');
 
-const xpGameOverModal = document.getElementById('xp-gameover-modal');
-const xpFinalScore = document.getElementById('xp-final-score');
-const xpModalClose = document.getElementById('xp-modal-close');
-const xpModalOk = document.getElementById('xp-modal-ok');
+  const xpGameOverModal = document.getElementById('xp-gameover-modal');
+  const xpFinalScore = document.getElementById('xp-final-score');
+  const xpModalClose = document.getElementById('xp-modal-close');
+  const xpModalOk = document.getElementById('xp-modal-ok');
 
-// Vlastní zaměřovač
-const crosshair = document.createElement('div');
-crosshair.className = 'custom-crosshair';
-gameArea.appendChild(crosshair);
+  const crosshair = document.createElement('div');
+  crosshair.className = 'custom-crosshair';
+  gameArea.appendChild(crosshair);
 
-// Umístění roztažených stromů
-function initTrees() {
-    document.querySelectorAll('.tree-obstacle-1, .tree-obstacle-2').forEach(t => t.remove());
-    
-    // Strom_1 v levé části
-    const tree1 = document.createElement('div');
-    tree1.className = 'tree-obstacle-1';
-    tree1.style.left = '250px'; 
-    gameArea.appendChild(tree1);
+  function initTrees() {
+      document.querySelectorAll('.tree-obstacle-1, .tree-obstacle-2').forEach(t => t.remove());
+      
+      const tree1 = document.createElement('div');
+      tree1.className = 'tree-obstacle-1';
+      tree1.style.left = '250px'; 
+      gameArea.appendChild(tree1);
 
-    // Strom_2 v pravé části
-    const tree2 = document.createElement('div');
-    tree2.className = 'tree-obstacle-2';
-    tree2.style.left = '850px'; 
-    gameArea.appendChild(tree2);
-}
+      const tree2 = document.createElement('div');
+      tree2.className = 'tree-obstacle-2';
+      tree2.style.left = '850px'; 
+      gameArea.appendChild(tree2);
+  }
 
-gameArea.addEventListener('mousemove', (e) => {
-    const rect = gameArea.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    crosshair.style.left = `${x}px`;
-    crosshair.style.top = `${y}px`;
+  gameArea.addEventListener('mousemove', (e) => {
+      const rect = gameArea.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      crosshair.style.left = `${x}px`;
+      crosshair.style.top = `${y}px`;
+  });
+
+  const bgAudio = new Audio('okno/minihra/zvuky/hudba_slepice_pozadi.mp3');
+  bgAudio.loop = true;
+  bgAudio.volume = 0.4;
+
+  const shotAudio = new Audio('okno/minihra/zvuky/vystrel.mp3');
+  const hitAudio = new Audio('okno/minihra/zvuky/zabiti_slepice.mp3');
+
+  let score = 0;
+  const maxAmmo = 8;
+  let ammo = maxAmmo;
+  let ammoStates = new Array(maxAmmo).fill(1);
+
+  let gameInterval = null;
+  let planeInterval = null;
+  let timerInterval = null;
+  let timeLeft = 60;
+  let isGameActive = false;
+
+  windowSpot.addEventListener('click', () => {
+      if (typeof pauseTrackWithFadeOut === 'function' && typeof isPlaying !== 'undefined' && isPlaying) {
+          pauseTrackWithFadeOut();
+      }
+      
+      gameModal.classList.add('active');
+      crosshair.style.display = 'block';
+      initTrees();
+      startGame();
+  });
+
+  closeGameModal.addEventListener('click', () => {
+      stopGame();
+  });
+
+  xpModalClose.addEventListener('click', () => {
+      xpGameOverModal.style.display = 'none';
+  });
+
+  xpModalOk.addEventListener('click', () => {
+      xpGameOverModal.style.display = 'none';
+  });
+
+  function updateAmmoDisplay() {
+      ammoContainer.innerHTML = '';
+      for (let i = 0; i < maxAmmo; i++) {
+          const div = document.createElement('div');
+          div.className = 'ammo-item';
+          let frameNum = ammoStates[i];
+          div.style.backgroundImage = `url('okno/minihra/naboje/sprite-${frameNum}-1.png')`;
+          ammoContainer.appendChild(div);
+      }
+      reloadMsg.style.display = (ammo === 0) ? 'block' : 'none';
+  }
+
+  function startGame() {
+      isGameActive = true;
+      score = 0;
+      ammo = maxAmmo;
+      ammoStates.fill(1);
+      timeLeft = 60;
+      scoreDisplay.textContent = score;
+      timerDisplay.textContent = timeLeft;
+      crosshair.style.display = 'block';
+      updateAmmoDisplay();
+
+      bgAudio.currentTime = 0;
+      bgAudio.play().catch(e => console.log("Background music blocked:", e));
+
+      document.querySelectorAll('.game-sprite, .plane-container').forEach(s => s.remove());
+
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+          if (!isGameActive) return;
+          timeLeft--;
+          timerDisplay.textContent = timeLeft;
+          if (timeLeft <= 0) {
+              endGame();
+          }
+      }, 1000);
+
+      clearInterval(gameInterval);
+      gameInterval = setInterval(spawnChicken, 600);
+
+      clearInterval(planeInterval);
+      planeInterval = setInterval(spawnPlane, 15000);
+  }
+
+  function endGame() {
+      isGameActive = false;
+      bgAudio.pause();
+      clearInterval(gameInterval);
+      clearInterval(planeInterval);
+      clearInterval(timerInterval);
+      crosshair.style.display = 'none';
+      document.querySelectorAll('.game-sprite, .plane-container, .tree-obstacle-1, .tree-obstacle-2').forEach(s => s.remove());
+
+      gameModal.classList.remove('active');
+      xpFinalScore.textContent = score;
+      xpGameOverModal.style.display = 'flex';
+  }
+
+  function stopGame() {
+      isGameActive = false;
+      gameModal.classList.remove('active');
+      crosshair.style.display = 'none';
+      bgAudio.pause();
+      clearInterval(gameInterval);
+      clearInterval(planeInterval);
+      clearInterval(timerInterval);
+      document.querySelectorAll('.game-sprite, .plane-container, .tree-obstacle-1, .tree-obstacle-2').forEach(s => s.remove());
+  }
+
+  gameArea.addEventListener('click', (e) => {
+      if (!isGameActive) return;
+
+      if (ammo > 0) {
+          let shotIndex = ammo - 1;
+          ammo--;
+
+          let currentFrame = 1;
+          const animInterval = setInterval(() => {
+              if (currentFrame <= 21) {
+                  ammoStates[shotIndex] = currentFrame;
+                  updateAmmoDisplay();
+                  currentFrame++;
+              } else {
+                  clearInterval(animInterval);
+              }
+          }, 20);
+
+          updateAmmoDisplay();
+
+          const shotSound = shotAudio.cloneNode();
+          shotSound.volume = 0.6;
+          shotSound.play().catch(err => console.log(err));
+      }
+  });
+
+  document.addEventListener('keydown', (e) => {
+      if (isGameActive && (e.key === 'r' || e.key === 'R')) {
+          ammo = maxAmmo;
+          ammoStates.fill(1);
+          updateAmmoDisplay();
+      }
+  });
+
+  function spawnChicken() {
+      if (!isGameActive) return;
+
+      const chicken = document.createElement('div');
+      chicken.className = 'game-sprite';
+
+      const typeRand = Math.random();
+      let sizeClass = 'chicken-medium';
+      let points = 20;
+      
+      let difficultyMultiplier = 1 + (60 - timeLeft) * 0.02;
+      let speed = (Math.random() * 1.2 + 2.5) * difficultyMultiplier;
+
+      if (typeRand < 0.20) {
+          sizeClass = 'chicken-large';
+          points = 10;
+          speed = (Math.random() * 0.6 + 1.5) * difficultyMultiplier;
+      } else if (typeRand < 0.60) {
+          sizeClass = 'chicken-medium';
+          points = 20;
+          speed = (Math.random() * 1.0 + 2.2) * difficultyMultiplier;
+      } else {
+          sizeClass = 'chicken-small';
+          points = 30;
+          speed = (Math.random() * 1.5 + 3.2) * difficultyMultiplier;
+      }
+
+      chicken.classList.add(sizeClass);
+
+      const fromLeft = Math.random() > 0.5;
+      const startY = Math.random() * 320 + 50;
+
+      let currentX = fromLeft ? -200 : gameArea.clientWidth + 50;
+      chicken.style.top = startY + 'px';
+      chicken.style.left = currentX + 'px';
+
+      if (fromLeft) {
+          chicken.style.transform = 'scaleX(-1)'; 
+      } else {
+          chicken.style.transform = 'scaleX(1)';  
+      }
+
+      let frameIndex = 1;
+      const totalFrames = 12;
+      chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/let/slepice_let (${frameIndex}).png')`;
+
+      const animTimer = setInterval(() => {
+          if (!isGameActive || isDead) return;
+          frameIndex = (frameIndex % totalFrames) + 1;
+          chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/let/slepice_let (${frameIndex}).png')`;
+      }, 65);
+
+      let isDead = false;
+
+      chicken.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (ammo > 0 && !isDead) {
+              isDead = true;
+              ammo--;
+              
+              let shotIndex = ammo;
+              let currentFrameAmmo = 1;
+              const animInterval = setInterval(() => {
+                  if (currentFrameAmmo <= 21) {
+                      ammoStates[shotIndex] = currentFrameAmmo;
+                      updateAmmoDisplay();
+                      currentFrameAmmo++;
+                  } else {
+                      clearInterval(animInterval);
+                  }
+              }, 20);
+
+              score += points;
+              scoreDisplay.textContent = score;
+              updateAmmoDisplay();
+
+              const shotSound = shotAudio.cloneNode();
+              shotSound.volume = 0.6;
+              shotSound.play().catch(err => console.log(err));
+
+              const hitAudioClone = hitAudio.cloneNode();
+              hitAudioClone.volume = 0.8;
+              hitAudioClone.play().catch(err => console.log(err));
+
+              clearInterval(animTimer);
+
+              let deathFrame = 1;
+              const totalDeathFrames = 8;
+              chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/smrt/slepice_smrt (${deathFrame}).png')`;
+
+              const deathAnimTimer = setInterval(() => {
+                  if (deathFrame < totalDeathFrames) {
+                      deathFrame++;
+                      chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/smrt/slepice_smrt (${deathFrame}).png')`;
+                  }
+              }, 50);
+
+              let fallY = parseFloat(chicken.style.top);
+              const fallTimer = setInterval(() => {
+                  fallY += 10;
+                  chicken.style.top = fallY + 'px';
+                  if (fallY > gameArea.clientHeight) {
+                      clearInterval(fallTimer);
+                      clearInterval(deathAnimTimer);
+                      chicken.remove();
+                  }
+              }, 16);
+          }
+      });
+
+      gameArea.appendChild(chicken);
+
+      const moveTimer = setInterval(() => {
+          if (!isGameActive || isDead) {
+              clearInterval(moveTimer);
+              if (isDead) return;
+              chicken.remove();
+              return;
+          }
+
+          currentX += (fromLeft ? speed : -speed);
+          chicken.style.left = currentX + 'px';
+
+          if ((fromLeft && currentX > gameArea.clientWidth + 250) || (!fromLeft && currentX < -250)) {
+              clearInterval(moveTimer);
+              chicken.remove();
+          }
+      }, 16);
+  }
+
+  function spawnPlane() {
+      if (!isGameActive) return;
+
+      const planeContainer = document.createElement('div');
+      planeContainer.className = 'plane-container';
+
+      const planeImg = document.createElement('div');
+      planeImg.className = 'plane-img';
+
+      const bannerImg = document.createElement('img');
+      bannerImg.src = 'okno/minihra/letadlo/plane_banner.png';
+      bannerImg.className = 'plane-banner-img';
+
+      planeContainer.appendChild(bannerImg);
+      planeContainer.appendChild(planeImg);
+
+      let currentX = -500;
+      planeContainer.style.top = '40px';
+      planeContainer.style.left = currentX + 'px';
+
+      let planeFrame = 1;
+      const totalPlaneFrames = 19;
+      planeImg.style.backgroundImage = `url('okno/minihra/letadlo/letadlo (${planeFrame}).png')`;
+
+      const planeAnimTimer = setInterval(() => {
+          if (!isGameActive) {
+              clearInterval(planeAnimTimer);
+              return;
+          }
+          planeFrame = (planeFrame % totalPlaneFrames) + 1;
+          planeImg.style.backgroundImage = `url('okno/minihra/letadlo/letadlo (${planeFrame}).png')`;
+      }, 80);
+
+      gameArea.appendChild(planeContainer);
+
+      const planeTimer = setInterval(() => {
+          if (!isGameActive) {
+              clearInterval(planeTimer);
+              clearInterval(planeAnimTimer);
+              planeContainer.remove();
+              return;
+          }
+
+          currentX += 1.5;
+          planeContainer.style.left = currentX + 'px';
+
+          if (currentX > gameArea.clientWidth + 600) {
+              clearInterval(planeTimer);
+              clearInterval(planeAnimTimer);
+              planeContainer.remove();
+          }
+      }, 16);
+  }
 });
-
-const bgAudio = new Audio('okno/minihra/zvuky/hudba_slepice_pozadi.mp3');
-bgAudio.loop = true;
-bgAudio.volume = 0.4;
-
-const shotAudio = new Audio('okno/minihra/zvuky/vystrel.mp3');
-const hitAudio = new Audio('okno/minihra/zvuky/zabiti_slepice.mp3');
-
-let score = 0;
-const maxAmmo = 8;
-let ammo = maxAmmo;
-let ammoStates = new Array(maxAmmo).fill(1);
-
-let gameInterval = null;
-let planeInterval = null;
-let timerInterval = null;
-let timeLeft = 60;
-let isGameActive = false;
-
-windowSpot.addEventListener('click', () => {
-    if (typeof pauseTrackWithFadeOut === 'function' && typeof isPlaying !== 'undefined' && isPlaying) {
-        pauseTrackWithFadeOut();
-    }
-    
-    gameModal.classList.add('active');
-    crosshair.style.display = 'block';
-    initTrees();
-    startGame();
-});
-
-closeGameModal.addEventListener('click', () => {
-    stopGame();
-});
-
-xpModalClose.addEventListener('click', () => {
-    xpGameOverModal.style.display = 'none';
-});
-
-xpModalOk.addEventListener('click', () => {
-    xpGameOverModal.style.display = 'none';
-});
-
-function updateAmmoDisplay() {
-    ammoContainer.innerHTML = '';
-    for (let i = 0; i < maxAmmo; i++) {
-        const div = document.createElement('div');
-        div.className = 'ammo-item';
-        let frameNum = ammoStates[i];
-        div.style.backgroundImage = `url('okno/minihra/naboje/sprite-${frameNum}-1.png')`;
-        ammoContainer.appendChild(div);
-    }
-    reloadMsg.style.display = (ammo === 0) ? 'block' : 'none';
-}
-
-function startGame() {
-    isGameActive = true;
-    score = 0;
-    ammo = maxAmmo;
-    ammoStates.fill(1);
-    timeLeft = 60;
-    scoreDisplay.textContent = score;
-    timerDisplay.textContent = timeLeft;
-    crosshair.style.display = 'block';
-    updateAmmoDisplay();
-
-    bgAudio.currentTime = 0;
-    bgAudio.play().catch(e => console.log("Background music blocked:", e));
-
-    document.querySelectorAll('.game-sprite, .plane-container').forEach(s => s.remove());
-
-    clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-        if (!isGameActive) return;
-        timeLeft--;
-        timerDisplay.textContent = timeLeft;
-        if (timeLeft <= 0) {
-            endGame();
-        }
-    }, 1000);
-
-    clearInterval(gameInterval);
-    gameInterval = setInterval(spawnChicken, 600);
-
-    clearInterval(planeInterval);
-    planeInterval = setInterval(spawnPlane, 15000);
-}
-
-function endGame() {
-    isGameActive = false;
-    bgAudio.pause();
-    clearInterval(gameInterval);
-    clearInterval(planeInterval);
-    clearInterval(timerInterval);
-    crosshair.style.display = 'none';
-    document.querySelectorAll('.game-sprite, .plane-container, .tree-obstacle-1, .tree-obstacle-2').forEach(s => s.remove());
-
-    gameModal.classList.remove('active');
-    xpFinalScore.textContent = score;
-    xpGameOverModal.style.display = 'flex';
-}
-
-function stopGame() {
-    isGameActive = false;
-    gameModal.classList.remove('active');
-    crosshair.style.display = 'none';
-    bgAudio.pause();
-    clearInterval(gameInterval);
-    clearInterval(planeInterval);
-    clearInterval(timerInterval);
-    document.querySelectorAll('.game-sprite, .plane-container, .tree-obstacle-1, .tree-obstacle-2').forEach(s => s.remove());
-}
-
-gameArea.addEventListener('click', (e) => {
-    if (!isGameActive) return;
-
-    if (ammo > 0) {
-        let shotIndex = ammo - 1;
-        ammo--;
-
-        let currentFrame = 1;
-        const animInterval = setInterval(() => {
-            if (currentFrame <= 21) {
-                ammoStates[shotIndex] = currentFrame;
-                updateAmmoDisplay();
-                currentFrame++;
-            } else {
-                clearInterval(animInterval);
-            }
-        }, 20);
-
-        updateAmmoDisplay();
-
-        const shotSound = shotAudio.cloneNode();
-        shotSound.volume = 0.6;
-        shotSound.play().catch(err => console.log(err));
-    }
-});
-
-document.addEventListener('keydown', (e) => {
-    if (isGameActive && (e.key === 'r' || e.key === 'R')) {
-        ammo = maxAmmo;
-        ammoStates.fill(1);
-        updateAmmoDisplay();
-    }
-});
-
-function spawnChicken() {
-    if (!isGameActive) return;
-
-    const chicken = document.createElement('div');
-    chicken.className = 'game-sprite';
-
-    const typeRand = Math.random();
-    let sizeClass = 'chicken-medium';
-    let points = 20;
-    
-    let difficultyMultiplier = 1 + (60 - timeLeft) * 0.02;
-    let speed = (Math.random() * 1.2 + 2.5) * difficultyMultiplier;
-
-    if (typeRand < 0.20) {
-        sizeClass = 'chicken-large';
-        points = 10;
-        speed = (Math.random() * 0.6 + 1.5) * difficultyMultiplier;
-    } else if (typeRand < 0.60) {
-        sizeClass = 'chicken-medium';
-        points = 20;
-        speed = (Math.random() * 1.0 + 2.2) * difficultyMultiplier;
-    } else {
-        sizeClass = 'chicken-small';
-        points = 30;
-        speed = (Math.random() * 1.5 + 3.2) * difficultyMultiplier;
-    }
-
-    chicken.classList.add(sizeClass);
-
-    const fromLeft = Math.random() > 0.5;
-    const startY = Math.random() * 320 + 50;
-
-    let currentX = fromLeft ? -200 : gameArea.clientWidth + 50;
-    chicken.style.top = startY + 'px';
-    chicken.style.left = currentX + 'px';
-
-    if (fromLeft) {
-        chicken.style.transform = 'scaleX(-1)'; 
-    } else {
-        chicken.style.transform = 'scaleX(1)';  
-    }
-
-    let frameIndex = 1;
-    const totalFrames = 12;
-    chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/let/slepice_let (${frameIndex}).png')`;
-
-    const animTimer = setInterval(() => {
-        if (!isGameActive || isDead) return;
-        frameIndex = (frameIndex % totalFrames) + 1;
-        chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/let/slepice_let (${frameIndex}).png')`;
-    }, 65);
-
-    let isDead = false;
-
-    chicken.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (ammo > 0 && !isDead) {
-            isDead = true;
-            ammo--;
-            
-            let shotIndex = ammo;
-            let currentFrameAmmo = 1;
-            const animInterval = setInterval(() => {
-                if (currentFrameAmmo <= 21) {
-                    ammoStates[shotIndex] = currentFrameAmmo;
-                    updateAmmoDisplay();
-                    currentFrameAmmo++;
-                } else {
-                    clearInterval(animInterval);
-                }
-            }, 20);
-
-            score += points;
-            scoreDisplay.textContent = score;
-            updateAmmoDisplay();
-
-            const shotSound = shotAudio.cloneNode();
-            shotSound.volume = 0.6;
-            shotSound.play().catch(err => console.log(err));
-
-            const hitAudioClone = hitAudio.cloneNode();
-            hitAudioClone.volume = 0.8;
-            hitAudioClone.play().catch(err => console.log(err));
-
-            clearInterval(animTimer);
-
-            let deathFrame = 1;
-            const totalDeathFrames = 8;
-            chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/smrt/slepice_smrt (${deathFrame}).png')`;
-
-            const deathAnimTimer = setInterval(() => {
-                if (deathFrame < totalDeathFrames) {
-                    deathFrame++;
-                    chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/smrt/slepice_smrt (${deathFrame}).png')`;
-                }
-            }, 50);
-
-            let fallY = parseFloat(chicken.style.top);
-            const fallTimer = setInterval(() => {
-                fallY += 10;
-                chicken.style.top = fallY + 'px';
-                if (fallY > gameArea.clientHeight) {
-                    clearInterval(fallTimer);
-                    clearInterval(deathAnimTimer);
-                    chicken.remove();
-                }
-            }, 16);
-        }
-    });
-
-    gameArea.appendChild(chicken);
-
-    const moveTimer = setInterval(() => {
-        if (!isGameActive || isDead) {
-            clearInterval(moveTimer);
-            if (isDead) return;
-            chicken.remove();
-            return;
-        }
-
-        currentX += (fromLeft ? speed : -speed);
-        chicken.style.left = currentX + 'px';
-
-        if ((fromLeft && currentX > gameArea.clientWidth + 250) || (!fromLeft && currentX < -250)) {
-            clearInterval(moveTimer);
-            chicken.remove();
-        }
-    }, 16);
-}
-
-// Generování letadla: Létá zleva doprava a táhne banner za sebou vlevo
-function spawnPlane() {
-    if (!isGameActive) return;
-
-    const planeContainer = document.createElement('div');
-    planeContainer.className = 'plane-container';
-
-    const planeImg = document.createElement('div');
-    planeImg.className = 'plane-img';
-
-    const bannerImg = document.createElement('img');
-    bannerImg.src = 'okno/minihra/letadlo/plane_banner.png';
-    bannerImg.className = 'plane-banner-img';
-
-    // Pro let zleva doprava: Banner je vlevo (první), letadlo je vpravo za ním
-    planeContainer.appendChild(bannerImg);
-    planeContainer.appendChild(planeImg);
-
-    let currentX = -500; // Startuje vlevo mimo obrazovku
-    planeContainer.style.top = '40px';
-    planeContainer.style.left = currentX + 'px';
-
-    let planeFrame = 1;
-    const totalPlaneFrames = 19;
-    planeImg.style.backgroundImage = `url('okno/minihra/letadlo/letadlo (${planeFrame}).png')`;
-
-    const planeAnimTimer = setInterval(() => {
-        if (!isGameActive) {
-            clearInterval(planeAnimTimer);
-            return;
-        }
-        planeFrame = (planeFrame % totalPlaneFrames) + 1;
-        planeImg.style.backgroundImage = `url('okno/minihra/letadlo/letadlo (${planeFrame}).png')`;
-    }, 80);
-
-    gameArea.appendChild(planeContainer);
-
-    const planeTimer = setInterval(() => {
-        if (!isGameActive) {
-            clearInterval(planeTimer);
-            clearInterval(planeAnimTimer);
-            planeContainer.remove();
-            return;
-        }
-
-        currentX += 1.5; // Letí zleva doprava
-        planeContainer.style.left = currentX + 'px';
-
-        if (currentX > gameArea.clientWidth + 600) {
-            clearInterval(planeTimer);
-            clearInterval(planeAnimTimer);
-            planeContainer.remove();
-        }
-    }, 16);
-}});
