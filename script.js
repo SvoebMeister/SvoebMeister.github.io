@@ -10,13 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     roomContainer.insertBefore(roomBgImg, roomContainer.firstChild);
   }
 
-  // --- PERMANENTNÍ PŘEDNAČÍTÁNÍ OBRÁZKŮ (PRELOAD) ---
+  // --- PERMANENTNÍ PŘEDNAČÍTÁNÍ OBRÁZKŮ (PRELOAD) - BEZ KOČKY ---
   const imagesToPreload = [
     'pokoj/webovka_pokoj.png',
     'okno/okno.png',
     'obraz/obraz_maly_princ.png',
     'obraz/obraz_kmotr.png',
-    'obraz/obraz_cheschire_cat.png',
     'obraz/ram_obrazu.png',
     'gramec/gramec_kryt.png',
     'gramec/vyskakovaci_okno_songy/vyskakovaci_okno_pisnicky.png',
@@ -33,11 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     img.src = src;
   });
 
-  // Seznam obrazů v galerii
+  // Seznam obrazů v galerii (kočka odstraněna, zbyly jen Malý princ a Kmotr)
   const artImages = [
     { src: 'obraz/obraz_maly_princ.png', customClass: '' },
-    { src: 'obraz/obraz_kmotr.png', customClass: '' },
-    { src: 'obraz/obraz_cheschire_cat.png', customClass: 'cat-art' }
+    { src: 'obraz/obraz_kmotr.png', customClass: '' }
   ];
 
   let currentArtIndex = 0;
@@ -131,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'eurotrack': { title: 'Euro Truck Simulator', audio: 'pocitac/homepage/eurotrack/eurotrack_soundeffect.mp3' },
     'detroit': { title: 'Detroit: Become Human', video: 'pocitac/homepage/detroti_become_human/detroit_video.mp4' }
   };
-
+  
   let currentAudio = null;
   const desktopIcons = document.querySelectorAll('.desktop-icon');
   const appWindow = document.getElementById('app-window');
@@ -154,18 +152,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const appKey = icon.getAttribute('data-app');
       const appData = appsConfig[appKey];
       if (!appData) return;
-
       closeAppWindowFunc();
       appTitle.textContent = appData.title;
       let hasContent = false;
-
       if (appData.image) {
         const img = document.createElement('img');
         img.src = appData.image;
         appWindowBody.appendChild(img);
         hasContent = true;
       }
-
       if (appData.video) {
         const video = document.createElement('video');
         video.src = appData.video;
@@ -175,12 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
         appWindowBody.appendChild(video);
         hasContent = true;
       }
-
       if (appData.audio) {
         currentAudio = new Audio(appData.audio);
         currentAudio.play().catch(err => console.log("Audio autoplay blokován:", err));
       }
-
       if (hasContent) {
         appWindow.classList.add('active');
       }
@@ -192,30 +185,28 @@ document.addEventListener('DOMContentLoaded', () => {
     closeAppWindowFunc();
   });
 
-
-  // --- LOGIKA GRAMOFONU ---
+  // --- GRAMOFON PLAYLIST & PŘEHRÁVÁNÍ ---
   const playlist = [
-    { title: "Daniel Landa - Bila Hora", src: "gramec/vyskakovaci_okno_songy/playlist/Daniel Landa - Bila Hora.mp3" },
-    { title: "Daniel Landa Šance", src: "gramec/vyskakovaci_okno_songy/playlist/Daniel Landa Šance.mp3" },
-    { title: "Ennio Morricone - The Trio", src: "gramec/vyskakovaci_okno_songy/playlist/Ennio Morricone The Trio Audio.mp3" },
     { title: "Right Next Door To Hell", src: "gramec/vyskakovaci_okno_songy/playlist/Right Next Door To Hell.mp3" },
     { title: "2 Minutes To Midnight", src: "gramec/vyskakovaci_okno_songy/playlist/2 Minutes To Midnight.mp3" },
     { title: "Alexander the Great", src: "gramec/vyskakovaci_okno_songy/playlist/Alexander the Great (356-323 B.C.) (2015 Remaster).mp3" },
     { title: "Can I Play with Madness", src: "gramec/vyskakovaci_okno_songy/playlist/Can I Play with Madness (2015 Remaster).mp3" },
     { title: "Dream of Mirrors", src: "gramec/vyskakovaci_okno_songy/playlist/Dream of Mirrors (2015 Remaster).mp3" },
     { title: "Phantom of the Opera", src: "gramec/vyskakovaci_okno_songy/playlist/Phantom of the Opera (2015 Remaster).mp3" },
-    { title: "Kate Bush - Wuthering Heights", src: "gramec/vyskakovaci_okno_songy/playlist/Kate Bush Wuthering Heights.mp3" },
     { title: "The Godfather - The Halls Of Fear", src: "gramec/vyskakovaci_okno_songy/playlist/The Godfather - The Halls Of Fear.mp3" },
-    { title: "Beauty and the Beast", src: "gramec/vyskakovaci_okno_songy/playlist/Beauty and the Beast (2017 Remaster).mp3" },
+    { title: "Ennio Morricone - The Trio", src: "gramec/vyskakovaci_okno_songy/playlist/Ennio Morricone The Trio Audio.mp3" },
     { title: "Kill Bill - The Whistle Song", src: "gramec/vyskakovaci_okno_songy/playlist/Kill Bill Vol. 1 - The whistle song.mp3" },
+    { title: "Beauty and the Beast", src: "gramec/vyskakovaci_okno_songy/playlist/Beauty and the Beast (2017 Remaster).mp3" },
     { title: "Station to Station", src: "gramec/vyskakovaci_okno_songy/playlist/Station to Station (2016 Remaster).mp3" },
-    { title: "YES - Owner of a Lonely Heart", src: "gramec/vyskakovaci_okno_songy/playlist/YES - Owner of a Lonely Heart (Official Music Video).mp3" }
+    { title: "Kate Bush - Wuthering Heights", src: "gramec/vyskakovaci_okno_songy/playlist/Kate Bush Wuthering Heights.mp3" },
+    { title: "YES - Owner of a Lonely Heart", src: "gramec/vyskakovaci_okno_songy/playlist/YES - Owner of a Lonely Heart (Official Music Video).mp3" },
+    { title: "Daniel Landa - Bila Hora", src: "gramec/vyskakovaci_okno_songy/playlist/Daniel Landa - Bila Hora.mp3" },
+    { title: "Daniel Landa Šance", src: "gramec/vyskakovaci_okno_songy/playlist/Daniel Landa Šance.mp3" }
   ];
 
   let currentTrackIndex = 0;
   let gramAudio = new Audio();
   let isPlaying = false;
-
   const vinylRecord = document.getElementById('vinyl-record');
   const playBtn = document.getElementById('gram-play');
   const prevTrackBtn = document.getElementById('gram-prev');
@@ -223,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const seekSlider = document.getElementById('gram-seek');
   const volumeSlider = document.getElementById('gram-volume');
   const songTitleDisplay = document.getElementById('gram-current-song-title');
-
+  
   let currentRotation = 0;
   let currentSpeed = 0; 
   let normalSpeed = 0.18;
@@ -246,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!lastFrameTime) lastFrameTime = timestamp;
     const delta = timestamp - lastFrameTime;
     lastFrameTime = timestamp;
-
     if (currentSpeed > 0) {
       currentRotation = (currentRotation + currentSpeed * delta) % 360;
       vinylRecord.style.transform = `rotate(${currentRotation}deg)`;
@@ -336,6 +326,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isPlaying) playTrack();
   });
 
+  // Automatické spuštění další písničky po dohrání té aktuální
+  gramAudio.addEventListener('ended', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    loadTrack(currentTrackIndex);
+    if (isPlaying) {
+      playTrack();
+    }
+  });
+
   gramAudio.addEventListener('timeupdate', () => {
     if (gramAudio.duration) {
       seekSlider.value = (gramAudio.currentTime / gramAudio.duration) * 100;
@@ -353,4 +352,379 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   loadTrack(0);
+
+// --- INTERAKTIVNÍ MINIHRA MOORHUHN ---
+const windowSpot = document.getElementById('window-spot');
+const gameModal = document.getElementById('game-modal');
+const closeGameModal = document.getElementById('close-game-modal');
+const gameArea = document.getElementById('game-area');
+const scoreDisplay = document.getElementById('score-val');
+const timerDisplay = document.getElementById('timer-val');
+const ammoContainer = document.getElementById('ammo-container');
+const reloadMsg = document.getElementById('reload-msg');
+
+const xpGameOverModal = document.getElementById('xp-gameover-modal');
+const xpFinalScore = document.getElementById('xp-final-score');
+const xpModalClose = document.getElementById('xp-modal-close');
+const xpModalOk = document.getElementById('xp-modal-ok');
+
+// Vlastní zaměřovač
+const crosshair = document.createElement('div');
+crosshair.className = 'custom-crosshair';
+gameArea.appendChild(crosshair);
+
+// Umístění roztažených stromů
+function initTrees() {
+    document.querySelectorAll('.tree-obstacle-1, .tree-obstacle-2').forEach(t => t.remove());
+    
+    // Strom_1 v levé části
+    const tree1 = document.createElement('div');
+    tree1.className = 'tree-obstacle-1';
+    tree1.style.left = '250px'; 
+    gameArea.appendChild(tree1);
+
+    // Strom_2 v pravé části
+    const tree2 = document.createElement('div');
+    tree2.className = 'tree-obstacle-2';
+    tree2.style.left = '850px'; 
+    gameArea.appendChild(tree2);
+}
+
+gameArea.addEventListener('mousemove', (e) => {
+    const rect = gameArea.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    crosshair.style.left = `${x}px`;
+    crosshair.style.top = `${y}px`;
 });
+
+const bgAudio = new Audio('okno/minihra/zvuky/hudba_slepice_pozadi.mp3');
+bgAudio.loop = true;
+bgAudio.volume = 0.4;
+
+const shotAudio = new Audio('okno/minihra/zvuky/vystrel.mp3');
+const hitAudio = new Audio('okno/minihra/zvuky/zabiti_slepice.mp3');
+
+let score = 0;
+const maxAmmo = 8;
+let ammo = maxAmmo;
+let ammoStates = new Array(maxAmmo).fill(1);
+
+let gameInterval = null;
+let planeInterval = null;
+let timerInterval = null;
+let timeLeft = 60;
+let isGameActive = false;
+
+windowSpot.addEventListener('click', () => {
+    if (typeof pauseTrackWithFadeOut === 'function' && typeof isPlaying !== 'undefined' && isPlaying) {
+        pauseTrackWithFadeOut();
+    }
+    
+    gameModal.classList.add('active');
+    crosshair.style.display = 'block';
+    initTrees();
+    startGame();
+});
+
+closeGameModal.addEventListener('click', () => {
+    stopGame();
+});
+
+xpModalClose.addEventListener('click', () => {
+    xpGameOverModal.style.display = 'none';
+});
+
+xpModalOk.addEventListener('click', () => {
+    xpGameOverModal.style.display = 'none';
+});
+
+function updateAmmoDisplay() {
+    ammoContainer.innerHTML = '';
+    for (let i = 0; i < maxAmmo; i++) {
+        const div = document.createElement('div');
+        div.className = 'ammo-item';
+        let frameNum = ammoStates[i];
+        div.style.backgroundImage = `url('okno/minihra/naboje/sprite-${frameNum}-1.png')`;
+        ammoContainer.appendChild(div);
+    }
+    reloadMsg.style.display = (ammo === 0) ? 'block' : 'none';
+}
+
+function startGame() {
+    isGameActive = true;
+    score = 0;
+    ammo = maxAmmo;
+    ammoStates.fill(1);
+    timeLeft = 60;
+    scoreDisplay.textContent = score;
+    timerDisplay.textContent = timeLeft;
+    crosshair.style.display = 'block';
+    updateAmmoDisplay();
+
+    bgAudio.currentTime = 0;
+    bgAudio.play().catch(e => console.log("Background music blocked:", e));
+
+    document.querySelectorAll('.game-sprite, .plane-container').forEach(s => s.remove());
+
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        if (!isGameActive) return;
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            endGame();
+        }
+    }, 1000);
+
+    clearInterval(gameInterval);
+    gameInterval = setInterval(spawnChicken, 600);
+
+    clearInterval(planeInterval);
+    planeInterval = setInterval(spawnPlane, 15000);
+}
+
+function endGame() {
+    isGameActive = false;
+    bgAudio.pause();
+    clearInterval(gameInterval);
+    clearInterval(planeInterval);
+    clearInterval(timerInterval);
+    crosshair.style.display = 'none';
+    document.querySelectorAll('.game-sprite, .plane-container, .tree-obstacle-1, .tree-obstacle-2').forEach(s => s.remove());
+
+    gameModal.classList.remove('active');
+    xpFinalScore.textContent = score;
+    xpGameOverModal.style.display = 'flex';
+}
+
+function stopGame() {
+    isGameActive = false;
+    gameModal.classList.remove('active');
+    crosshair.style.display = 'none';
+    bgAudio.pause();
+    clearInterval(gameInterval);
+    clearInterval(planeInterval);
+    clearInterval(timerInterval);
+    document.querySelectorAll('.game-sprite, .plane-container, .tree-obstacle-1, .tree-obstacle-2').forEach(s => s.remove());
+}
+
+gameArea.addEventListener('click', (e) => {
+    if (!isGameActive) return;
+
+    if (ammo > 0) {
+        let shotIndex = ammo - 1;
+        ammo--;
+
+        let currentFrame = 1;
+        const animInterval = setInterval(() => {
+            if (currentFrame <= 21) {
+                ammoStates[shotIndex] = currentFrame;
+                updateAmmoDisplay();
+                currentFrame++;
+            } else {
+                clearInterval(animInterval);
+            }
+        }, 20);
+
+        updateAmmoDisplay();
+
+        const shotSound = shotAudio.cloneNode();
+        shotSound.volume = 0.6;
+        shotSound.play().catch(err => console.log(err));
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (isGameActive && (e.key === 'r' || e.key === 'R')) {
+        ammo = maxAmmo;
+        ammoStates.fill(1);
+        updateAmmoDisplay();
+    }
+});
+
+function spawnChicken() {
+    if (!isGameActive) return;
+
+    const chicken = document.createElement('div');
+    chicken.className = 'game-sprite';
+
+    const typeRand = Math.random();
+    let sizeClass = 'chicken-medium';
+    let points = 20;
+    
+    let difficultyMultiplier = 1 + (60 - timeLeft) * 0.02;
+    let speed = (Math.random() * 1.2 + 2.5) * difficultyMultiplier;
+
+    if (typeRand < 0.20) {
+        sizeClass = 'chicken-large';
+        points = 10;
+        speed = (Math.random() * 0.6 + 1.5) * difficultyMultiplier;
+    } else if (typeRand < 0.60) {
+        sizeClass = 'chicken-medium';
+        points = 20;
+        speed = (Math.random() * 1.0 + 2.2) * difficultyMultiplier;
+    } else {
+        sizeClass = 'chicken-small';
+        points = 30;
+        speed = (Math.random() * 1.5 + 3.2) * difficultyMultiplier;
+    }
+
+    chicken.classList.add(sizeClass);
+
+    const fromLeft = Math.random() > 0.5;
+    const startY = Math.random() * 320 + 50;
+
+    let currentX = fromLeft ? -200 : gameArea.clientWidth + 50;
+    chicken.style.top = startY + 'px';
+    chicken.style.left = currentX + 'px';
+
+    if (fromLeft) {
+        chicken.style.transform = 'scaleX(-1)'; 
+    } else {
+        chicken.style.transform = 'scaleX(1)';  
+    }
+
+    let frameIndex = 1;
+    const totalFrames = 12;
+    chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/let/slepice_let (${frameIndex}).png')`;
+
+    const animTimer = setInterval(() => {
+        if (!isGameActive || isDead) return;
+        frameIndex = (frameIndex % totalFrames) + 1;
+        chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/let/slepice_let (${frameIndex}).png')`;
+    }, 65);
+
+    let isDead = false;
+
+    chicken.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (ammo > 0 && !isDead) {
+            isDead = true;
+            ammo--;
+            
+            let shotIndex = ammo;
+            let currentFrameAmmo = 1;
+            const animInterval = setInterval(() => {
+                if (currentFrameAmmo <= 21) {
+                    ammoStates[shotIndex] = currentFrameAmmo;
+                    updateAmmoDisplay();
+                    currentFrameAmmo++;
+                } else {
+                    clearInterval(animInterval);
+                }
+            }, 20);
+
+            score += points;
+            scoreDisplay.textContent = score;
+            updateAmmoDisplay();
+
+            const shotSound = shotAudio.cloneNode();
+            shotSound.volume = 0.6;
+            shotSound.play().catch(err => console.log(err));
+
+            const hitAudioClone = hitAudio.cloneNode();
+            hitAudioClone.volume = 0.8;
+            hitAudioClone.play().catch(err => console.log(err));
+
+            clearInterval(animTimer);
+
+            let deathFrame = 1;
+            const totalDeathFrames = 8;
+            chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/smrt/slepice_smrt (${deathFrame}).png')`;
+
+            const deathAnimTimer = setInterval(() => {
+                if (deathFrame < totalDeathFrames) {
+                    deathFrame++;
+                    chicken.style.backgroundImage = `url('okno/minihra/slepice_velka/smrt/slepice_smrt (${deathFrame}).png')`;
+                }
+            }, 50);
+
+            let fallY = parseFloat(chicken.style.top);
+            const fallTimer = setInterval(() => {
+                fallY += 10;
+                chicken.style.top = fallY + 'px';
+                if (fallY > gameArea.clientHeight) {
+                    clearInterval(fallTimer);
+                    clearInterval(deathAnimTimer);
+                    chicken.remove();
+                }
+            }, 16);
+        }
+    });
+
+    gameArea.appendChild(chicken);
+
+    const moveTimer = setInterval(() => {
+        if (!isGameActive || isDead) {
+            clearInterval(moveTimer);
+            if (isDead) return;
+            chicken.remove();
+            return;
+        }
+
+        currentX += (fromLeft ? speed : -speed);
+        chicken.style.left = currentX + 'px';
+
+        if ((fromLeft && currentX > gameArea.clientWidth + 250) || (!fromLeft && currentX < -250)) {
+            clearInterval(moveTimer);
+            chicken.remove();
+        }
+    }, 16);
+}
+
+// Generování letadla: Létá zleva doprava a táhne banner za sebou vlevo
+function spawnPlane() {
+    if (!isGameActive) return;
+
+    const planeContainer = document.createElement('div');
+    planeContainer.className = 'plane-container';
+
+    const planeImg = document.createElement('div');
+    planeImg.className = 'plane-img';
+
+    const bannerImg = document.createElement('img');
+    bannerImg.src = 'okno/minihra/letadlo/plane_banner.png';
+    bannerImg.className = 'plane-banner-img';
+
+    // Pro let zleva doprava: Banner je vlevo (první), letadlo je vpravo za ním
+    planeContainer.appendChild(bannerImg);
+    planeContainer.appendChild(planeImg);
+
+    let currentX = -500; // Startuje vlevo mimo obrazovku
+    planeContainer.style.top = '40px';
+    planeContainer.style.left = currentX + 'px';
+
+    let planeFrame = 1;
+    const totalPlaneFrames = 19;
+    planeImg.style.backgroundImage = `url('okno/minihra/letadlo/letadlo (${planeFrame}).png')`;
+
+    const planeAnimTimer = setInterval(() => {
+        if (!isGameActive) {
+            clearInterval(planeAnimTimer);
+            return;
+        }
+        planeFrame = (planeFrame % totalPlaneFrames) + 1;
+        planeImg.style.backgroundImage = `url('okno/minihra/letadlo/letadlo (${planeFrame}).png')`;
+    }, 80);
+
+    gameArea.appendChild(planeContainer);
+
+    const planeTimer = setInterval(() => {
+        if (!isGameActive) {
+            clearInterval(planeTimer);
+            clearInterval(planeAnimTimer);
+            planeContainer.remove();
+            return;
+        }
+
+        currentX += 1.5; // Letí zleva doprava
+        planeContainer.style.left = currentX + 'px';
+
+        if (currentX > gameArea.clientWidth + 600) {
+            clearInterval(planeTimer);
+            clearInterval(planeAnimTimer);
+            planeContainer.remove();
+        }
+    }, 16);
+}});

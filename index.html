@@ -18,10 +18,58 @@
 
           <link rel="stylesheet" href="style.css">
 </head>
+<!-- Modal okno minihry Moorhuhn -->
+<div class="modal-overlay" id="game-modal">
+          <div class="modal-content game-modal-content">
+                    <div class="game-window-header">
+                              <span>Moorhuhn_Strelnice_2006.exe</span>
+                              <button class="modal-close-btn" id="close-game-modal">✕</button>
+                    </div>
 
+                    <div class="game-area" id="game-area">
+                              <!-- Pozadí louky -->
+                              <img src="okno/minihra/louka_minihra.jpg" alt="Louka" class="game-bg">
+
+                              <!-- Časovač a Skóre vpravo nahoře -->
+                              <div class="game-timer">ČAS: <span id="timer-val">60</span>s</div>
+                              <div class="game-score">SKÓRE: <span id="score-val">0</span></div>
+
+                              <!-- Vrstva stromů (od shora dolů, blokuje střelbu) -->
+                              <div class="game-trees"></div>
+
+                              <!-- Nápis pro přebití (klávesa R) -->
+                              <div class="reload-msg" id="reload-msg">STISKNI 'R' PRO PŘEBITÍ!</div>
+
+                              <!-- Zásobník 8 nábojů vpravo dole -->
+                              <div class="ammo-container" id="ammo-container"></div>
+                    </div>
+          </div>
+</div>
+
+<!-- Windows XP Style Game Over Okno -->
+<div class="xp-modal-overlay" id="xp-gameover-modal">
+          <div class="xp-window">
+                    <div class="xp-window-header">
+                              <span>Moorhuhn - Konec Hry</span>
+                              <button class="xp-close-btn" id="xp-modal-close">✕</button>
+                    </div>
+                    <div class="xp-window-body">
+                              <div class="xp-icon">ℹ</div>
+                              <div class="xp-text">
+                                        <p><strong>Čas vypršel!</strong></p>
+                                        <p>Tvé celkové skóre je: <span id="xp-final-score"
+                                                            style="color: #000080; font-weight: bold;">0</span> bodů.
+                                        </p>
+                              </div>
+                    </div>
+                    <div class="xp-window-footer">
+                              <button class="xp-btn" id="xp-modal-ok">OK</button>
+                    </div>
+          </div>
+</div>
 <body>
 
-          <!-- Horní záhlaví s barvou #627522 a silným černým dělícím pruhem -->
+          <!-- Horní záhlaví -->
           <header class="main-header">
                     <h1 class="header-title">„Zdravím“</h1>
                     <h2 class="header-subtitle">Daniel Svoboda</h2>
@@ -38,7 +86,7 @@
           <!-- Hlavní sekce s pokojem -->
           <main class="room-wrapper">
                     <div class="room-container" id="room-container">
-                              <!-- Pozadí pokoje se sem vloží automaticky přes JavaScript, aby ho bot neviděl -->
+                              <!-- Pozadí pokoje se vloží automaticky přes JavaScript -->
 
                               <!-- Okno -->
                               <div class="interactive-item window-spot" id="window-spot">
@@ -119,27 +167,19 @@
                     <div class="modal-content gramophone-modal-content">
                               <button class="modal-close" id="close-gramophone-modal">×</button>
                               <div class="gramophone-container">
-                                        <!-- Pozadí okna gramofonu WMP -->
                                         <img src="gramec/vyskakovaci_okno_songy/vyskakovaci_okno_pisnicky.png"
                                                   alt="Gramofon WMP" class="gramophone-bg-img">
-
-                                        <!-- Vinylová deska na talíři -->
                                         <img src="gramec/vyskakovaci_okno_songy/deska.png" alt="Deska"
                                                   class="vinyl-record" id="vinyl-record">
 
-                                        <!-- WMP Tlačítka a ovládací prvky -->
                                         <button class="wmp-btn" id="gram-play" title="Přehrát / Pozastavit"></button>
                                         <button class="wmp-btn" id="gram-prev" title="Předchozí skladba"></button>
                                         <button class="wmp-btn" id="gram-next" title="Další skladba"></button>
 
-                                        <!-- Posuvník skladby -->
                                         <input type="range" id="gram-seek" value="0" min="0" max="100" step="0.1">
-
-                                        <!-- Posuvník hlasitosti -->
                                         <input type="range" id="gram-volume" value="1" min="0" max="1" step="0.01"
                                                   title="Hlasitost">
 
-                                        <!-- Název skladby -->
                                         <div id="gram-current-song-title">Vyberte skladbu</div>
                               </div>
                     </div>

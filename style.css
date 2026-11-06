@@ -44,11 +44,12 @@ body {
 
 .about-text {
           font-size: 1.7rem;
-          line-height: 2.;
+          line-height: 2;
           color: #000000;
           text-align: justify;
           font-weight: 500;
 }
+
 .room-wrapper {
           width: 100%;
           max-width: 1400px;
@@ -122,14 +123,7 @@ body {
           height: 70%;
           object-fit: fill;
           z-index: 1;
-}
-
-.art-content.cat-art {
-          top: 11%;
-          left: 3%;
-          width: 100%;
-          height: 83%;
-          object-fit: fill;
+          will-change: transform, opacity;
 }
 
 .frame-overlay {
@@ -385,6 +379,7 @@ body {
           object-fit: contain;
           pointer-events: none;
           transform: rotate(0deg);
+          will-change: transform;
 }
 
 /* WMP Tlačítka a prvky s přesnou absolutní pozicí */
@@ -486,4 +481,324 @@ body {
 
 #close-gramophone-modal:hover {
           background-color: rgba(255, 0, 0, 0.8);
+}
+
+/* --- MINIHRA MOORHUHN - ČISTÉ ROITAŽENÉ STROMY A LETADLO --- */
+.game-modal-content {
+          width: 92%;
+          max-width: 1200px;
+          background: #ece9d8;
+          border: 3px solid #0054e3;
+          border-radius: 6px 6px 0 0;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.game-window-header {
+          background: linear-gradient(to right, #0054e3 0%, #3a81f7 100%);
+          color: white;
+          padding: 6px 12px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-weight: bold;
+          font-size: 0.95rem;
+}
+
+.modal-close-btn {
+          background: #e81123;
+          color: white;
+          border: none;
+          width: 22px;
+          height: 22px;
+          border-radius: 3px;
+          cursor: pointer;
+          font-weight: bold;
+}
+
+.modal-close-btn:hover {
+          background: #f1707a;
+}
+
+.game-area {
+          position: relative;
+          width: 100%;
+          height: 600px;
+          overflow: hidden;
+          background: #000;
+          cursor: none !important;
+          user-select: none;
+}
+
+/* Větší retro zaměřovač */
+.custom-crosshair {
+          position: absolute;
+          width: 76px;
+          height: 76px;
+          background-image: url('okno/minihra/aimcursor.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          pointer-events: none;
+          transform: translate(-50%, -50%);
+          z-index: 100;
+          display: none;
+}
+
+.game-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
+          pointer-events: none;
+}
+
+/* Strom 1 (vlevo) - roztažený přesně od shora dolů bez opakování */
+.tree-obstacle-1 {
+          position: absolute;
+          top: 0;
+          width: 170px;
+          height: 100%;
+          background-image: url('okno/minihra/strom_1.png');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          /* Roztáhne se na plnou výšku okna */
+          pointer-events: auto;
+          z-index: 10;
+}
+
+/* Strom 2 (vpravo) - roztažený přesně od shora dolů bez opakování */
+.tree-obstacle-2 {
+          position: absolute;
+          top: 0;
+          width: 100px;
+          height: 100%;
+          background-image: url('okno/minihra/strom_2.png');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          /* Roztáhne se na plnou výšku okna */
+          pointer-events: auto;
+          z-index: 10;
+}
+
+.game-sprite {
+          position: absolute;
+          background-size: contain !important;
+          background-repeat: no-repeat !important;
+          background-position: center !important;
+          z-index: 4;
+          /* Pod stromy, aby se za nimi slepice schovávaly */
+}
+
+/* Velikosti slepic */
+.chicken-small {
+          width: 50px;
+          height: 50px;
+}
+
+.chicken-medium {
+          width: 85px;
+          height: 85px;
+}
+
+.chicken-large {
+          width: 190px;
+          height: 190px;
+}
+
+/* Letadlo a banner */
+.plane-container {
+          position: absolute;
+          display: flex;
+          align-items: center;
+          z-index: 6;
+          pointer-events: none;
+}
+
+.plane-img {
+          width: 280px;
+          height: 140px;
+          background-size: contain !important;
+          background-repeat: no-repeat !important;
+          background-position: center !important;
+          transform: scaleX(-1);
+          /* Otočení letadla po směru letu zleva doprava */
+          flex-shrink: 0;
+}
+
+.plane-banner-img {
+          height: 95px;
+          width: auto;
+          margin-right: -10px;
+          object-fit: contain;
+}
+
+/* Časovač a Skóre */
+.game-timer {
+          position: absolute;
+          top: 15px;
+          right: 210px;
+          background: rgba(0, 0, 0, 0.85);
+          color: #ffff00;
+          font-family: 'Courier New', monospace;
+          font-size: 1.8rem;
+          font-weight: bold;
+          padding: 8px 16px;
+          border: 2px solid #ffff00;
+          border-radius: 4px;
+          z-index: 20;
+          pointer-events: none;
+}
+
+.game-score {
+          position: absolute;
+          top: 15px;
+          right: 20px;
+          background: rgba(0, 0, 0, 0.85);
+          color: #00ff00;
+          font-family: 'Courier New', monospace;
+          font-size: 1.8rem;
+          font-weight: bold;
+          padding: 8px 18px;
+          border: 2px solid #00ff00;
+          border-radius: 4px;
+          z-index: 20;
+          pointer-events: none;
+}
+
+/* Zásobník nábojů */
+.ammo-container {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          display: flex;
+          gap: 6px;
+          z-index: 20;
+          background: rgba(0, 0, 0, 0.75);
+          padding: 10px 14px;
+          border-radius: 6px;
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          pointer-events: none;
+}
+
+.ammo-item {
+          width: 20px;
+          height: 48px;
+          background-size: contain !important;
+          background-repeat: no-repeat !important;
+          background-position: center !important;
+}
+
+.reload-msg {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: rgba(232, 17, 35, 0.92);
+          color: white;
+          font-family: 'Segoe UI', sans-serif;
+          font-weight: bold;
+          font-size: 1.6rem;
+          padding: 14px 28px;
+          border-radius: 6px;
+          display: none;
+          z-index: 30;
+          pointer-events: none;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Windows XP Okno */
+.xp-modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.4);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 2000;
+}
+
+.xp-window {
+          width: 380px;
+          background: #ece9d8;
+          border: 3px solid #0054e3;
+          border-radius: 8px 8px 0 0;
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+          font-family: 'Tahoma', sans-serif;
+}
+
+.xp-window-header {
+          background: linear-gradient(to right, #0054e3 0%, #3a81f7 100%);
+          color: white;
+          padding: 6px 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-weight: bold;
+          font-size: 0.9rem;
+}
+
+.xp-close-btn {
+          background: #e81123;
+          color: white;
+          border: 1px solid white;
+          width: 20px;
+          height: 20px;
+          border-radius: 3px;
+          cursor: pointer;
+          font-weight: bold;
+}
+
+.xp-window-body {
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          background: #ece9d8;
+          color: #000;
+          font-size: 0.95rem;
+}
+
+.xp-icon {
+          width: 36px;
+          height: 36px;
+          background: #0054e3;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.4rem;
+          font-weight: bold;
+          font-style: italic;
+          flex-shrink: 0;
+}
+
+.xp-window-footer {
+          padding: 10px;
+          background: #f0eeed;
+          display: flex;
+          justify-content: center;
+          border-top: 1px solid #dcd8cb;
+}
+
+.xp-btn {
+          background: linear-gradient(to bottom, #fff 0%, #e1dfd8 100%);
+          border: 1px solid #7a7a7a;
+          padding: 4px 20px;
+          border-radius: 3px;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 0.85rem;
+}
+
+.xp-btn:hover {
+          background: linear-gradient(to bottom, #eef3fb 0%, #d4e2fc 100%);
+          border: 1px solid #0054e3;
 }
