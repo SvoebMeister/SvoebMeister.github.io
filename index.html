@@ -60,6 +60,12 @@
                                         <p>Tvé celkové skóre je: <span id="xp-final-score"
                                                             style="color: #000080; font-weight: bold;">0</span> bodů.
                                         </p>
+                                        <p style="margin-top: 4px;">Počet vystřelenů: <span id="xp-final-shots"
+                                                            style="color: #000080; font-weight: bold;">0</span>
+                                        </p>
+                                        <p style="margin-top: 4px;">Úspěšnost střelby: <span id="xp-final-accuracy"
+                                                            style="color: #000080; font-weight: bold;">0%</span>
+                                        </p>
                               </div>
                     </div>
                     <div class="xp-window-footer">
@@ -94,8 +100,8 @@
                                         <img src="okno/okno.png" alt="Okno" id="window-img" class="item-img">
                               </div>
 
-                              <!-- Obraz na zdi s galerií (bez šipek, kliká se na celek) -->
-                              <div class="interactive-item frame-spot" id="frame-spot">
+                              <!-- Obraz na zdi s galerií -->
+                              <div class="interactive-item frame-spot" id="frame-spot" title="Klikni pro změnu obrazu">
                                         <img src="obraz/obraz_maly_princ.png" alt="Art" id="art-img"
                                                   class="art-content">
                                         <img src="obraz/ram_obrazu.png" alt="Rám obrazu" class="frame-overlay">
@@ -161,7 +167,7 @@
                     </div>
           </div>
 
-          <!-- Vyskakovací okno pro Gramofon (WMP) - s modrým čárkovaným zvýrazněním -->
+          <!-- Vyskakovací okno pro Gramofon (WMP) -->
           <div class="modal-overlay" id="gramophone-modal">
                     <div class="modal-content gramophone-modal-content">
                               <button class="modal-close" id="close-gramophone-modal">×</button>
@@ -174,7 +180,7 @@
                                                   class="vinyl-record interactive-clickable" id="vinyl-record"
                                                   title="Klikni pro spuštění/zastavení">
 
-                                        <!-- Tlačítka s modrým čárkovaným podbarvením -->
+                                        <!-- Tlačítka s modrým ohraničením -->
                                         <button class="wmp-btn interactive-clickable" id="gram-play"
                                                   title="Přehrát / Pozastavit"></button>
                                         <button class="wmp-btn interactive-clickable" id="gram-prev"

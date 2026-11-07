@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     img.src = src;
   });
 
-  // Galerie obrazů (kliknutím kamkoliv na obraz se přepíná)
+  // Seznam obrazů v galerii (původní funkční cyklování)
   const artImages = [
     { src: 'obraz/obraz_maly_princ.png', customClass: '' },
     { src: 'obraz/obraz_kmotr.png', customClass: '' }
@@ -354,6 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const xpGameOverModal = document.getElementById('xp-gameover-modal');
   const xpFinalScore = document.getElementById('xp-final-score');
+  const xpFinalShots = document.getElementById('xp-final-shots');
+  const xpFinalAccuracy = document.getElementById('xp-final-accuracy');
   const xpModalClose = document.getElementById('xp-modal-close');
   const xpModalOk = document.getElementById('xp-modal-ok');
 
@@ -394,6 +396,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const maxAmmo = 8;
   let ammo = maxAmmo;
   let ammoStates = new Array(maxAmmo).fill(1);
+
+  // Statistiky střelby
+  let totalShotsFired = 0;
+  let totalHits = 0;
 
   let gameInterval = null;
   let planeInterval = null;
@@ -441,6 +447,8 @@ document.addEventListener('DOMContentLoaded', () => {
       score = 0;
       ammo = maxAmmo;
       ammoStates.fill(1);
+      totalShotsFired = 0;
+      totalHits = 0;
       timeLeft = 60;
       scoreDisplay.textContent = score;
       timerDisplay.textContent = timeLeft;
@@ -480,6 +488,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       gameModal.classList.remove('active');
       xpFinalScore.textContent = score;
+      xpFinalShots.textContent = totalShotsFired;
+
+      let accuracy = totalShotsFired > 0 ? Math.round((totalHits / totalShotsFired) * 100) : 0;
+      xpFinalAccuracy.textContent = accuracy + '%';
+
       xpGameOverModal.style.display = 'flex';
   }
 
@@ -498,6 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isGameActive) return;
 
       if (ammo > 0) {
+          totalShotsFired++; // Započítání výstřelu
           let shotIndex = ammo - 1;
           ammo--;
 
@@ -586,6 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
           e.stopPropagation();
           if (ammo > 0 && !isDead) {
               isDead = true;
+              totalHits++; // Započítání trefené slepice
               ammo--;
               
               let shotIndex = ammo;
