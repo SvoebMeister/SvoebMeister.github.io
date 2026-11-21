@@ -6,8 +6,8 @@
 }
 
 body {
-          background-color: #e6d18e;
-          color: #e6d18e;
+          background-color: #ffde59;
+          color: #ffde59;
           min-height: 100vh;
           display: flex;
           flex-direction: column;
@@ -25,14 +25,14 @@ body {
 .header-title {
           font-size: 3rem;
           font-weight: 700;
-          color: #e6d18e;
+          color: #ffde59;
           margin-bottom: 8px;
 }
 
 .header-subtitle {
           font-size: 1.8em;
           font-weight: 600;
-          color: #e6d18e;
+          color: #ffde59;
 }
 
 .about-section {
